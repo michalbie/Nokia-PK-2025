@@ -22,6 +22,8 @@ public:
     virtual void handleDisconnect() override;
     virtual void handleUnknownRecipient(common::MessageId msgId, common::PhoneNumber from) override;
 
+    void handleCallRequest(common::PhoneNumber from) override;
+
 private:
     common::PhoneNumber caller;
 };

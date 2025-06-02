@@ -4,6 +4,7 @@
 #include <chrono>
 #include "Messages/MessageId.hpp"
 #include "TalkingState.hpp"
+#include "Ports/IBtsPort.hpp"
 
 namespace ue
 {
@@ -69,6 +70,12 @@ void DialingState::handleDisconnect()
     logger.logInfo("DialingState: transport lost.");
     context.timer.stopTimer();
     context.setState<NotConnectedState>();
+}
+
+void DialingState::handleCallRequest(common::PhoneNumber from)
+{
+    logger.logInfo("DialingState: incoming call from ", from, " while dialing. Declining.");
+    context.bts.sendCallDropped(from);
 }
 
 } // namespace ue

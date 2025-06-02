@@ -14,6 +14,9 @@ public:
     void handleDisconnect() override;
     void handleUnknownRecipient(common::MessageId msgId, common::PhoneNumber from) override;
 
+
+    void handleSms(const common::PhoneNumber& from, const std::string& text) override;
+    void handleCallRequest(common::PhoneNumber from) override;
 private:
     common::PhoneNumber peer;
 };

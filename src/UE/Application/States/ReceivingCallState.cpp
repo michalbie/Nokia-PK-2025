@@ -3,6 +3,7 @@
 #include "TalkingState.hpp"
 //#include "UeGui/IDialMode.hpp"
 #include <chrono>
+#include "Ports/IBtsPort.hpp"
 
 namespace ue
 {
@@ -67,6 +68,13 @@ void ReceivingCallState::handleUnknownRecipient(common::MessageId msgId, common:
     logger.logInfo("ReceivingCallState: UnknownRecipient received. Transitioning to ConnectedState.");
     context.timer.stopTimer();
     context.setState<ConnectedState>();
+}
+
+void ReceivingCallState::handleCallRequest(common::PhoneNumber from)
+{
+    logger.logInfo("ReceivingCallState: incoming call from ", from, " while already receiving a call—declining.");
+    context.bts.sendCallDropped(from);
+
 }
 
 } // namespace ue

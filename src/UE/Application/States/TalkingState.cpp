@@ -2,6 +2,7 @@
 #include "ConnectedState.hpp"
 #include "NotConnectedState.hpp"
 #include "UeGui/ICallMode.hpp"
+#include "Application.hpp"
 
 namespace ue {
 
@@ -58,4 +59,18 @@ void TalkingState::handleUnknownRecipient(common::MessageId, common::PhoneNumber
     context.setState<ConnectedState>();
 }
 
+void TalkingState::handleSms(const common::PhoneNumber& from, const std::string& text)
+{
+    logger.logInfo("TalkingState: received SMS from ", from, " during call.");
+    context.app.storeReceivedSms(from, text);
+
+    context.user.showNewSms(true);
+}
+
+
+void TalkingState::handleCallRequest(common::PhoneNumber from)
+{
+    logger.logInfo("TalkingState: second call request from ", from, "—already in a call, sending busy.");
+    context.bts.sendCallDropped(from);
+}
 } // namespace ue
