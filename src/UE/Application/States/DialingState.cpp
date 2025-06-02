@@ -22,6 +22,7 @@ void DialingState::handleUserAction(const std::string& id)
     if(id == "ACCEPT") {
         if (context.user.getDialedNumber(dialedNumber)) {
             context.bts.sendCallRequest(dialedNumber);
+            context.user.showCalling(dialedNumber);
             logger.logInfo("Call request sent to ", dialedNumber);
         } else {
             logger.logError("Failed to retrieve dialed phone number");

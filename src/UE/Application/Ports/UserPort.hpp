@@ -31,6 +31,7 @@ public:
     bool getComposedSmsData(common::PhoneNumber& recipient, std::string& text) override;
 
     void showDialing() override;                            // ADDED
+    void showCalling(const common::PhoneNumber& callee) override;   //ADDED
     bool getDialedNumber(common::PhoneNumber& recipient) override; // ADDED
     void showIncomingCall(const common::PhoneNumber& caller) override; // ADDED
     IUeGui::ICallMode& showCallMode() override; // ADDED

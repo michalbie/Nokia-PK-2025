@@ -271,6 +271,27 @@ void UserPort::showIncomingCall(const common::PhoneNumber& caller)
     });
 }
 
+void UserPort::showCalling(const common::PhoneNumber& callee)
+{
+    gui.setAlertMode().setText("");
+
+    logger.logInfo("Switching UI to outbound-calling mode for: ", callee);
+    IUeGui::ITextMode& alert = gui.setAlertMode();
+    alert.setText("Calling to: " + common::to_string(callee));
+
+    // only wire “Reject”
+    gui.setAcceptCallback(nullptr);
+
+    gui.setRejectCallback([this]() {
+        if (handler) {
+            logger.logDebug("Outgoing call CANCEL pressed");
+            handler->handleUserAction("REJECT");
+        } else {
+            logger.logError("Reject (during showCalling) but handler is null");
+        }
+    });
+}
+
 IUeGui::ICallMode& UserPort::showCallMode()
 {
     logger.logInfo("Switching UI to call mode");
