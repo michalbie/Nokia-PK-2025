@@ -2,6 +2,7 @@
 #include "ViewingSingleSmsState.hpp" // Include for state transition
 #include "ConnectedState.hpp"       // Include for state transition back
 #include "Application.hpp"          // Include Application for getSmsDb/storeReceivedSms
+#include "ReceivingCallState.hpp"
 #include <string>                   
 #include <charconv>               
 #include <system_error>           
@@ -68,6 +69,13 @@ void ViewingSmsListState::handleSms(const common::PhoneNumber& from, const std::
     // updateSmsIndicator() is called automatically by storeReceivedSms
     // No need to refresh the list view itself as per spec (optional)
 }
+
+void ViewingSmsListState::handleCallRequest(common::PhoneNumber from)
+    {
+        logger.logInfo("ViewingSmsListState: incoming call from ", from);
+        context.user.showIncomingCall(from);
+        context.setState<ReceivingCallState>(from);
+    }
 
 
 } 

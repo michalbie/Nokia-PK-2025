@@ -3,6 +3,7 @@
 #include "Application.hpp"    // Include Application for storing/sending
 #include "Ports/IBtsPort.hpp" // Include IBtsPort for sending
 #include "Ports/IUserPort.hpp"// Include IUserPort for getting data
+#include "ReceivingCallState.hpp"
 
 namespace ue
 {
@@ -49,5 +50,13 @@ void ComposingSmsState::handleUserAction(const std::string& id)
         logger.logInfo("Ignoring unexpected user action in this state: ", id);
     }
 }
+
+void ComposingSmsState::handleCallRequest(common::PhoneNumber from)
+    {
+        logger.logInfo("ComposingSmsState: incoming call from ", from);
+        context.user.showIncomingCall(from);
+        // Switch into ReceivingCallState
+        context.setState<ReceivingCallState>(from);
+    }
 
 } 

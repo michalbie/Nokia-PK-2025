@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseState.hpp"
+#include "ReceivingCallState.hpp"
 
 namespace ue
 {
@@ -11,6 +12,7 @@ public:
     ComposingSmsState(Context& context);
 
     void handleUserAction(const std::string& id) override;
+    void handleCallRequest(common::PhoneNumber from) override;
 };
 
 }
