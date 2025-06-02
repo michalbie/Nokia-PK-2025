@@ -22,6 +22,9 @@ public:
     virtual void handleDisconnect() override;
     virtual void handleUnknownRecipient(common::MessageId msgId, common::PhoneNumber from) override;
 
+    void handleCallRequest(common::PhoneNumber from) override;
+    void handleSms(const common::PhoneNumber& from, const std::string& text) override;
+
 private:
     common::PhoneNumber caller;
 };
