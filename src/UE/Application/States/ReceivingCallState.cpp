@@ -4,6 +4,7 @@
 //#include "UeGui/IDialMode.hpp"
 #include <chrono>
 #include "Ports/IBtsPort.hpp"
+#include "Application.hpp"
 
 namespace ue
 {
@@ -68,6 +69,13 @@ void ReceivingCallState::handleUnknownRecipient(common::MessageId msgId, common:
     logger.logInfo("ReceivingCallState: UnknownRecipient received. Transitioning to ConnectedState.");
     context.timer.stopTimer();
     context.setState<ConnectedState>();
+}
+
+void ReceivingCallState::handleSms(const common::PhoneNumber& from, const std::string& text)
+{
+    logger.logInfo("ReceivingCallState: received SMS from ", from, " while ringing—storing in background.");
+    context.app.storeReceivedSms(from, text);
+    context.user.showNewSms(true);
 }
 
 void ReceivingCallState::handleCallRequest(common::PhoneNumber from)

@@ -5,6 +5,7 @@
 #include "Messages/MessageId.hpp"
 #include "TalkingState.hpp"
 #include "Ports/IBtsPort.hpp"
+#include "Application.hpp"
 
 namespace ue
 {
@@ -70,6 +71,13 @@ void DialingState::handleDisconnect()
     logger.logInfo("DialingState: transport lost.");
     context.timer.stopTimer();
     context.setState<NotConnectedState>();
+}
+
+void DialingState::handleSms(const common::PhoneNumber& from, const std::string& text)
+{
+    logger.logInfo("DialingState: received SMS from ", from, " during dialing, storing in background.");
+    context.app.storeReceivedSms(from, text);
+    context.user.showNewSms(true);
 }
 
 void DialingState::handleCallRequest(common::PhoneNumber from)
