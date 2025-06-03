@@ -66,7 +66,7 @@ void TalkingState::handleSms(const common::PhoneNumber& from, const std::string&
     logger.logInfo("TalkingState: received SMS from ", from, " during call.");
     context.app.storeReceivedSms(from, text);
 
-    context.user.showNewSms(true);
+    //context.user.showNewSms(true);
 }
 
 

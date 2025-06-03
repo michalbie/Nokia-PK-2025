@@ -90,7 +90,7 @@ TEST_F(ApplicationConnectingTestSuite, shallDisConnectOnTimeout)
 TEST_F(ApplicationConnectingTestSuite, shallDisConnectOnDisconnect)
 {
     EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(userPortMock, showNotConnected());
+    EXPECT_CALL(userPortMock, showNotConnected()).Times(2);
     objectUnderTest.handleDisconnect();
 }
 
