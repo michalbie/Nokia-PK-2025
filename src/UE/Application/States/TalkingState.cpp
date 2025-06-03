@@ -51,6 +51,8 @@ void TalkingState::handleCallDropped(common::PhoneNumber)
 
 void TalkingState::handleDisconnect()
 {
+    logger.logInfo("TalkingState: transport lost. Sending CallDropped to peer.");
+    context.bts.sendCallDropped(peer);
     context.setState<NotConnectedState>();
 }
 
@@ -64,7 +66,7 @@ void TalkingState::handleSms(const common::PhoneNumber& from, const std::string&
     logger.logInfo("TalkingState: received SMS from ", from, " during call.");
     context.app.storeReceivedSms(from, text);
 
-    context.user.showNewSms(true);
+    //context.user.showNewSms(true);
 }
 
 

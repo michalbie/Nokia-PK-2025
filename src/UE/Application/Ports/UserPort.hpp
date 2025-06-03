@@ -36,6 +36,7 @@ public:
     void showIncomingCall(const common::PhoneNumber& caller) override; // ADDED
     IUeGui::ICallMode& showCallMode() override; // ADDED
     void showTalkingOverlay() override; // ADDED
+    virtual void showPeerUserNotAvailable(const common::PhoneNumber& callee) override; // ADDED
 
 private:
     common::PrefixedLogger logger;

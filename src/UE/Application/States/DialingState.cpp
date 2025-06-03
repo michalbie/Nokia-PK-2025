@@ -63,12 +63,14 @@ void DialingState::handleUnknownRecipient(common::MessageId msgId, common::Phone
 {
     logger.logInfo("DialingState: UnknownRecipient. Transitioning to ConnectedState.");
     context.timer.stopTimer();
+    context.user.showPeerUserNotAvailable(from);
     context.setState<ConnectedState>();
 }
 
 void DialingState::handleDisconnect()
 {
-    logger.logInfo("DialingState: transport lost.");
+    logger.logInfo("DialingState: transport lost. Sending CallDropped before closing.");
+    context.bts.sendCallDropped(dialedNumber);
     context.timer.stopTimer();
     context.setState<NotConnectedState>();
 }
