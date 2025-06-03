@@ -51,6 +51,8 @@ void TalkingState::handleCallDropped(common::PhoneNumber)
 
 void TalkingState::handleDisconnect()
 {
+    logger.logInfo("TalkingState: transport lost. Sending CallDropped to peer.");
+    context.bts.sendCallDropped(peer);
     context.setState<NotConnectedState>();
 }
 

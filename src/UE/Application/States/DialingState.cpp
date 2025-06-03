@@ -68,7 +68,8 @@ void DialingState::handleUnknownRecipient(common::MessageId msgId, common::Phone
 
 void DialingState::handleDisconnect()
 {
-    logger.logInfo("DialingState: transport lost.");
+    logger.logInfo("DialingState: transport lost. Sending CallDropped before closing.");
+    context.bts.sendCallDropped(dialedNumber);
     context.timer.stopTimer();
     context.setState<NotConnectedState>();
 }

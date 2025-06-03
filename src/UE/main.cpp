@@ -3,6 +3,7 @@
 #include "Ports/BtsPort.hpp"
 #include "Ports/UserPort.hpp"
 #include "Ports/TimerPort.hpp"
+#include "Ports/IBtsPort.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -19,6 +20,12 @@ int main(int argc, char* argv[])
     UserPort user(logger, gui, phoneNumber);
     TimerPort timer(logger);
     Application app(phoneNumber, logger, bts, user, timer);
+
+    gui.setCloseGuard([&]() -> bool {
+        app.handleDisconnect();
+        return true;
+    });
+
     bts.start(app);
     user.start(app);
     timer.start(app);

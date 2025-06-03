@@ -42,6 +42,9 @@ void Application::handleAttachReject() { if (context.state) context.state->handl
 void Application::handleDisconnect()
 {
      logger.logInfo("Handle disconnect event from transport");
+     if (context.state) {
+        context.state->handleDisconnect();
+     }
      context.timer.stopTimer();
      context.user.showNotConnected();
      context.setState<NotConnectedState>();

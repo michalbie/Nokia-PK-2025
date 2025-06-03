@@ -60,6 +60,7 @@ void ReceivingCallState::handleCallTalk(common::PhoneNumber from, const std::str
 void ReceivingCallState::handleDisconnect()
 {
     logger.logInfo("ReceivingCallState: transport lost.");
+    context.bts.sendCallDropped(caller);
     context.timer.stopTimer();
     context.setState<NotConnectedState>();
 }
