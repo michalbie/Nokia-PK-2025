@@ -63,6 +63,7 @@ void DialingState::handleUnknownRecipient(common::MessageId msgId, common::Phone
 {
     logger.logInfo("DialingState: UnknownRecipient. Transitioning to ConnectedState.");
     context.timer.stopTimer();
+    context.user.showPeerUserNotAvailable(from);
     context.setState<ConnectedState>();
 }
 

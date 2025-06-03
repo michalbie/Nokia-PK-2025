@@ -38,6 +38,8 @@ public:
     virtual IUeGui::ICallMode& showCallMode() = 0;
     virtual void showTalkingOverlay() = 0;
 
+    virtual void showPeerUserNotAvailable(const common::PhoneNumber& callee) = 0;
+
 
 };
 

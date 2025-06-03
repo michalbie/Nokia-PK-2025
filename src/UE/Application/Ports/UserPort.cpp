@@ -319,4 +319,10 @@ void UserPort::showTalkingOverlay()
     alert.setText("Talking");
 }
 
+void UserPort::showPeerUserNotAvailable(const common::PhoneNumber& callee)
+{
+    IUeGui::ITextMode &alert = gui.setAlertMode();
+    alert.setText("Not available: " + common::to_string(callee));
+}
+
 } // namespace ue
